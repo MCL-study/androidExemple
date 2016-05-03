@@ -1,0 +1,13 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.5
+repositories {
+    maven{
+        url "https://repo.eclipse.org/content/repositories/californium"
+    }
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'org.eclipse.californium:californium-core:1.1.0-SNAPSHOT'
+    compile project(':dtolib')
+}
