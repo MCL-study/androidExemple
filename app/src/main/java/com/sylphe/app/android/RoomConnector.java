@@ -27,8 +27,8 @@ public class RoomConnector {
         this.userState = userState;
     }
 
-    public Integer makeRoom(LocData centerLoc,int maxGameMember,int scale){
-        RoomConfig config = new RoomConfig(centerLoc,maxGameMember,scale);
+    public Integer makeRoom(LocData centerLoc,int maxGameMember,int scale,int timeLimit){
+        RoomConfig config = new RoomConfig(centerLoc,maxGameMember,scale,timeLimit);
         CoapResponse response = client.put(config.getByteStream(), MsgType.MAKE_ROOM);
         if(response!=null){
             if(response.getCode() == ResponseCode.VALID){

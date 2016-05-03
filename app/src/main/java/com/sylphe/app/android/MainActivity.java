@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //멕시멈 멤버수 스케일 설정 해야함
-                Integer roomId = roomConnector.makeRoom(gpsInfo.getLocData(), 10, 5);
+                Integer roomId = roomConnector.makeRoom(gpsInfo.getLocData(), 10, 600,9999);
                 if(roomId != null){
                     Toast.makeText(MainActivity.this, "성공 roomid : "+roomId.toString(), Toast.LENGTH_SHORT).show();
     //                startGame(roomId);

@@ -178,7 +178,7 @@ public class GameClientActivity extends AppCompatActivity {
             }
             if(player!=null){
                 if(player.getUserProperties() == UserProperties.CHASER){
-                    if(data.getUserProperties() == UserProperties.FUGITIVI){
+                    if(data.getUserProperties() == UserProperties.FUGITIVE){
                         LocData locData = data.getLocData();
                         LocData playerLocData = player.getLocData();
                         double diffLat= locData.getLat() - playerLocData.getLat();
@@ -219,7 +219,7 @@ public class GameClientActivity extends AppCompatActivity {
             Paint paintBlack = new Paint();
             paintBlack.setColor(Color.BLACK);
             canvas.drawCircle(centerX, centerY, 12, paintBlack);
-            if(userProperties == UserProperties.FUGITIVI){
+            if(userProperties == UserProperties.FUGITIVE){
                 canvas.drawCircle(centerX,centerY, 10, paintGreen);
             }else{
                 canvas.drawCircle(centerX,centerY, 10, paintRed);
@@ -234,7 +234,7 @@ public class GameClientActivity extends AppCompatActivity {
                         double diffLng= locData.getLng() - playerLocData.getLng();
                         int resultX = (int) (centerX+diffLat/scalePerPixel);
                         int resultY = (int) (centerY+diffLng/scalePerPixel);
-                        if(data.getUserProperties() == UserProperties.FUGITIVI)
+                        if(data.getUserProperties() == UserProperties.FUGITIVE)
                             canvas.drawCircle(resultX,resultY,10,paintGreen);
                         else if(data.getUserProperties() == UserProperties.CHASER)
                             canvas.drawCircle(resultX,resultY,10,paintRed);
