@@ -44,7 +44,7 @@ public class GameClientActivity extends AppCompatActivity {
     private List<UserData> userList;
     private int userId;
     private int roomId;
-    private int userProperties;
+    private UserProperties userProperties;
     private UserData player;
     private MyView myView;
 
@@ -55,7 +55,7 @@ public class GameClientActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         userId = extras.getInt("id");
         roomId = extras.getInt("roomid");
-        userProperties = extras.getInt("userp");
+        userProperties = UserProperties.valueOf(extras.getInt("userp"));
         URI uri = null;
         try {
             uri = new URI(extras.getString("uri"));

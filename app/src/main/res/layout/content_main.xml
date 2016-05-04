@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/editTextProperties"
-            android:hint="0:도망자 1:추격자"
+            android:hint="2:도망자 3:추격자"
             android:layout_weight="1" />
         <Button
             android:layout_width="wrap_content"

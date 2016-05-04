@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 
 import com.sylphe.app.dto.RoomConfig;
+import com.sylphe.app.dto.UserProperties;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -100,8 +101,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean enterRoom(int roomId) {
- //       int i = scanner.nextInt();
-        //        System.out.println("0: 도망자 1:추격자");
         EditText properties = (EditText) findViewById(R.id.editTextProperties);
         String text = properties.getText().toString();
         if(text.equals("")){
@@ -109,8 +108,12 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }else{
             int i= Integer.parseInt(text);
-            userState.setUserProperties(i);
-            return roomConnector.enterRoom(roomId,i);
+
+            if(UserProperties.isValidProperties(i)){
+                userState.setUserProperties(UserProperties.valueOf(i));
+                return roomConnector.enterRoom(roomId,i);
+            }
+            return false;
         }
     }
 
