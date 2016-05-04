@@ -1,5 +1,6 @@
 package com.sylphe.app.server;
 import com.sylphe.app.dto.UserData;
+import com.sylphe.app.dto.UserProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class UserManager {
     }
 
     public UserData createUser(){
-        UserData user = new UserData(id,-1);
+        UserData user = new UserData(id, UserProperties.NOT_DEFINE);
         id++;
         addUser(user);
         return user;

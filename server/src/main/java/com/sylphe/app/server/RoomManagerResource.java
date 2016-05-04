@@ -2,6 +2,7 @@ package com.sylphe.app.server;
 import com.sylphe.app.dto.MsgType;
 import com.sylphe.app.dto.RoomConfig;
 import com.sylphe.app.dto.StreamListConverter;
+import com.sylphe.app.dto.UserProperties;
 
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.coap.CoAP.ResponseCode;
@@ -29,7 +30,7 @@ public class RoomManagerResource extends CoapResource {
         }else if(format == MsgType.ENTER_ROOM){
             String payload = exchange.getRequestText();
             String[] ids = payload.split("/");
-            roomManager.enterRoom(Integer.parseInt(ids[0]),Integer.parseInt(ids[1]),Integer.parseInt(ids[2]));
+            roomManager.enterRoom(Integer.parseInt(ids[0]), Integer.parseInt(ids[1]), UserProperties.valueOf(Integer.parseInt(ids[2])));
             exchange.respond(ResponseCode.VALID);
         }
     }

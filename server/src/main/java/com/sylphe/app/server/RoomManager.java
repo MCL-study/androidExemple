@@ -1,6 +1,7 @@
 package com.sylphe.app.server;
 import com.sylphe.app.dto.RoomConfig;
 import com.sylphe.app.dto.UserData;
+import com.sylphe.app.dto.UserProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class RoomManager {
         return null;
     }
 
-    public void enterRoom(int roomId, int userId,int userProperties){
+    public void enterRoom(int roomId, int userId,UserProperties userProperties){
         Room room = searchRoom(roomId);
         if (room != null) {
             room.addUser(new UserData(userId,userProperties));
