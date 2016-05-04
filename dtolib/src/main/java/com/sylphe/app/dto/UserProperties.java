@@ -6,7 +6,8 @@ package com.sylphe.app.dto;
 public enum UserProperties {
     FUGITIVE(2),
     CHASER(3),
-    UNKNOWN_CODE(4);
+    NOT_DEFINE(4),
+    UNKNOWN_CODE(5);
     public final int value;
     private UserProperties(int value) {
         this.value = value;
@@ -16,6 +17,7 @@ public enum UserProperties {
         switch (value) {
             case 2:return FUGITIVE;
             case 3:return CHASER;
+            case 4:return NOT_DEFINE;
             default:return UNKNOWN_CODE;
         }
     }
