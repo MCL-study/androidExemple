@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 /**
  * Created by myks7 on 2016-03-15.
  */
@@ -205,7 +206,7 @@ public class GameClientActivity extends AppCompatActivity {
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
 
-            double scalePerPixel=0.005;
+            double scalePerPixel=15000;
 
             int width = canvas.getWidth();
             int height = canvas.getHeight();
@@ -232,8 +233,10 @@ public class GameClientActivity extends AppCompatActivity {
                         LocData locData = data.getLocData();
                         double diffLat= locData.getLat() - playerLocData.getLat();
                         double diffLng= locData.getLng() - playerLocData.getLng();
-                        int resultX = (int) (centerX+diffLat/scalePerPixel);
-                        int resultY = (int) (centerY+diffLng/scalePerPixel);
+                        Log.d("d", diffLat + " " + diffLng);
+                        Log.d("d2",diffLat*scalePerPixel+" "+diffLng*scalePerPixel);
+                        int resultX = (int) (centerX+diffLat*scalePerPixel);
+                        int resultY = (int) (centerY+diffLng*scalePerPixel);
                         if(data.getUserProperties() == UserProperties.FUGITIVE)
                             canvas.drawCircle(resultX,resultY,10,paintGreen);
                         else if(data.getUserProperties() == UserProperties.CHASER)
