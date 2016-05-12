@@ -1,1 +1,1 @@
-include ':app', ':dtolib', ':server', ':fakeclient'
+include ':app', ':dtolib', ':server', ':fakeclient', ':gpsexemple'
