@@ -109,6 +109,7 @@ public class GpsInfo extends Service implements LocationListener {
         if(locationManager != null){
             locationManager.removeUpdates(GpsInfo.this);
         }
+        Toast.makeText(mContext,"call stopUsingGPS",Toast.LENGTH_SHORT).show();
     }
 
     /**
