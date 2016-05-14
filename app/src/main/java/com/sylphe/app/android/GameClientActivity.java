@@ -98,6 +98,7 @@ public class GameClientActivity extends AppCompatActivity {
                 LocationMessage locationMessage = new LocationMessage(payload, payload.length);
                 List<UserData> userDataList = locationMessage.getUserDataList();
                 updateAllLocation(userDataList);
+                checkCollision();
                 for (UserData data : userDataList) {
                     System.out.println(data.getId() + " " + data.getLocData().getLng() + " " + data.getLocData().getLat());
                 }
@@ -167,18 +168,23 @@ public class GameClientActivity extends AppCompatActivity {
             if(!exist){
                 userList.add(data);
             }
-            if(player!=null){
-                if(player.getUserProperties() == UserProperties.CHASER){
-                    if(data.getUserProperties() == UserProperties.FUGITIVE){
+        }
+    }
+
+    private void checkCollision() {
+        for (UserData data : userList) {
+            if (player != null) {
+                if (player.getUserProperties() == UserProperties.CHASER) {
+                    if (data.getUserProperties() == UserProperties.FUGITIVE) {
                         LocData locData = data.getLocData();
                         LocData playerLocData = player.getLocData();
-                        double diffLat= locData.getLat() - playerLocData.getLat();
-                        double diffLng= locData.getLng() - playerLocData.getLng();
-                        double distance = Math.sqrt(diffLat*diffLat + diffLng*diffLng);
-                        if(distance < 0.1){
+                        double diffLat = locData.getLat() - playerLocData.getLat();
+                        double diffLng = locData.getLng() - playerLocData.getLng();
+                        double distance = Math.sqrt(diffLat * diffLat + diffLng * diffLng);
+                        if (distance < 0.1) {
                             Log.d("catch", "catch :" + data.getId());
                             client.put(roomId + "/" + data.getId(), MsgType.CATCH_FUGITIVE);
-                            data.setLocData(new LocData(0,0));
+                            data.setLocData(new LocData(0, 0));
                         }
                     }
                 }
@@ -235,10 +241,5 @@ public class GameClientActivity extends AppCompatActivity {
                 }
             }
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }
