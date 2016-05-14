@@ -29,8 +29,6 @@ import java.net.URISyntaxException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -41,7 +39,6 @@ public class GameClientActivity extends AppCompatActivity {
     private boolean aliveFlag;
     private CoapObserveRelation relation;
     private CoapClient client;
-    private Timer timer;
     private List<UserData> userList;
     private int userId;
     private int roomId;
@@ -83,13 +80,10 @@ public class GameClientActivity extends AppCompatActivity {
     public void start(int roomId, int id) {
         aliveFlag = true;
         relation = client.observe(new handler(), roomId);
-        timer = new Timer();
-        timer.schedule(new NotifyLocationTask(), 0, 1000);
     }
 
     public void close() {
         relation.reactiveCancel();
-        timer.cancel();
         aliveFlag = false;
     }
 
@@ -107,8 +101,8 @@ public class GameClientActivity extends AppCompatActivity {
                 for (UserData data : userDataList) {
                     System.out.println(data.getId() + " " + data.getLocData().getLng() + " " + data.getLocData().getLat());
                 }
+                NotifyLocation();
             }
-            //모든 위치 정보 올 예정
 
         }
 
@@ -117,26 +111,23 @@ public class GameClientActivity extends AppCompatActivity {
         }
     }
 
-    class NotifyLocationTask extends TimerTask {
-        @Override
-        public void run() {
-            LocData location = gpsInfo.getLocData();
-            updateCurrentLoc(location);
-            UserData userData = new UserData(userId, userProperties, location);
-            LocationMessage locationMessage = new LocationMessage(roomId, 1, UserData.getSize());
-            locationMessage.addUserDataStream(userData.getStream());
-            CoapResponse response = client.put(locationMessage.getStream(), MsgType.USER_DATA);
-            if(response!=null){
-                if(response.getCode() == CoAP.ResponseCode.DELETED){
-                    endGame();
-                }else if(response.getCode() == CoAP.ResponseCode.VALID){
-                    for (UserData userData1 : userList) {
-                        if (userData1.getId() == userId) {
-                            userData1.setLocData(userData.getLocData());
-                            player = userData1;
-                            Message msg = handler.obtainMessage();
-                            handler.sendMessage(msg);
-                        }
+    public void NotifyLocation(){
+        LocData location = gpsInfo.getLocData();
+        updateCurrentLoc(location);
+        UserData userData = new UserData(userId, userProperties, location);
+        LocationMessage locationMessage = new LocationMessage(roomId, 1, UserData.getSize());
+        locationMessage.addUserDataStream(userData.getStream());
+        CoapResponse response = client.put(locationMessage.getStream(), MsgType.USER_DATA);
+        if(response!=null){
+            if(response.getCode() == CoAP.ResponseCode.DELETED){
+                endGame();
+            }else if(response.getCode() == CoAP.ResponseCode.VALID){
+                for (UserData userData1 : userList) {
+                    if (userData1.getId() == userId) {
+                        userData1.setLocData(userData.getLocData());
+                        player = userData1;
+                        Message msg = handler.obtainMessage();
+                        handler.sendMessage(msg);
                     }
                 }
             }
@@ -145,7 +136,6 @@ public class GameClientActivity extends AppCompatActivity {
 
     private void endGame() {
         //Toast.makeText(GameClientActivity.this, "잡혔습니다.", Toast.LENGTH_LONG);
-        timer.cancel();
         relation.reactiveCancel();
         aliveFlag =false;
 
